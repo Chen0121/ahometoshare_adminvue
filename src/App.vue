@@ -28,11 +28,20 @@
       
     </div>
     <router-view />
+    <div id="footer">
+      <b-navbar fixed="bottom" type="dark" variant="info">
+        <b-navbar-brand size="sm" href="#" class="footer">A Home To Share 2019 | ®All right reserved</b-navbar-brand>
+      </b-navbar>
+      
+    </div>
   </div>
 </template>
 
 <style scoped>
     #navlink a {
       color:white;
+    }
+    .footer{
+      text-align: center;
     }
 </style>
