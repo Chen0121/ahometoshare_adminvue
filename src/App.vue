@@ -1,47 +1,24 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <b-navbar toggleable="md" type="dark" variant="info">
-
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
-        <b-navbar-brand href="#">A HOME TO SHARE CONSOLE</b-navbar-brand>
-
-        <b-collapse is-nav id="nav_collapse">
-
-          <b-navbar-nav>
-            <b-nav-item id="navlink"><router-link to="/">Dashboard</router-link></b-nav-item>
-            <b-nav-item id="navlink"><router-link to="/hostManagement">Host Management</router-link></b-nav-item>
-            <b-nav-item id="navlink"><router-link to="/renterManagement">Renter Management</router-link></b-nav-item>
-          </b-navbar-nav>
-
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-
-            <b-nav-item id="navlink"><router-link to="/renterManagement">Signout</router-link></b-nav-item>
-          </b-navbar-nav>
-
-        </b-collapse>
-      </b-navbar>
-
-       |
-      
-    </div>
-    <router-view />
-    <div id="footer">
-      <b-navbar fixed="bottom" type="dark" variant="info">
-        <b-navbar-brand size="sm" href="#" class="footer">A Home To Share 2019 | ®All right reserved</b-navbar-brand>
-      </b-navbar>
-      
-    </div>
-  </div>
+  <v-app class="grey lighten-4">
+    <Navbar></Navbar>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+  </v-app>
 </template>
 
-<style scoped>
-    #navlink a {
-      color:white;
+<script>
+import Navbar from '@/components/Navbar'
+
+export default {
+  name: 'App',
+  components:{
+    Navbar
+  },
+  data(){
+    return{
+
     }
-    .footer{
-      text-align: center;
-    }
-</style>
+  }
+}
+</script>

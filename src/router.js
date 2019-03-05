@@ -1,33 +1,35 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Dashboard from "./views/Dashboard";
+import HostManagement from "./views/HostManagement";
+import RenterManagement from "./views/RenterManagement";
+import Login from "./views/Login";
 
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      name: "dashboard",
+      component: Dashboard
     },
     {
       path: "/hostManagement",
       name: "hostManagement",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/HostManagement.vue")
+      component: HostManagement
     },
     {
       path: "/renterManagement",
       name: "renterManagement",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/RenterManagement.vue")
+      component: RenterManagement
+    },
+    {
+      path: "/login",
+      name: "Login",
+      component: Login
     }
   ]
 });

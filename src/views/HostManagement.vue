@@ -1,54 +1,95 @@
 <template>
     <div id="host-page-container">
-    <b-container fluid>
-      <b-row>
-        <b-col cols="4" id="search-area">
-          <div>
-            <b-navbar type="light" variant="light">
-                <label>Search here:</label>
-                <b-input id="search" type="text" placeholder="Search" v-model="search"></b-input>
-            </b-navbar>
-          </div>
-          <hr>
-          <div>
-            <b-form-checkbox v-model="email">Email</b-form-checkbox>
-            <b-form-checkbox v-model="name">Name</b-form-checkbox>
-            <b-form-checkbox v-model="phone">Phone</b-form-checkbox>
-            <b-form-checkbox v-model="address">Address</b-form-checkbox>
-            <b-form-checkbox v-model="age">Age</b-form-checkbox>
-            <b-form-select v-model="gender" :options="genderOptions" class="narrowbox"></b-form-select>
-          </div>
-          <hr>
-          <div>This search box will serach on any selected column above. If none of them are selected, it will search on all columns.</div>                 
-        </b-col>
-        <b-col cols="8">
-          <b-row>
-            <b-col>
-              <div class="narrowbox">
-                <b-form-select v-model="perpage" :options="perpageOptions" class="mb-3"></b-form-select>
-              </div>
-            </b-col>
-            <b-col>
-              <div>
-                Total matched records: {{filteredHosts.length}}
-              </div>
-            </b-col>
-            <b-col>
-              <b-pagination size="md" align="right" :total-rows="totalPages" v-model="currentPage" :per-page="perpage"></b-pagination>
-            </b-col>
-          </b-row>
-          
-          <b-table 
-          :outlined="true"
-          :hover="true"
-          :items="filteredHosts"
-          :fields="fields"
-          :per-page="perpage"
-          :current-page="currentPage">
-          </b-table>
-        </b-col>
-      </b-row>
-    </b-container>
+    <v-container grid-list-md>
+      <v-layout row wrap>
+        <v-flex  xs12 md5>
+          <v-layout row>
+            <v-flex mx-3 d-flex>
+              <v-text-field label="SEARCH" append-icon="search"></v-text-field>      
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex d-flex class="px-3">
+              <v-layout>
+                <v-flex d-flex md9>
+                  <v-checkbox v-model="email" label="Email"></v-checkbox>
+                  <v-checkbox v-model="name" label="Name"></v-checkbox>
+                  <v-checkbox v-model="phone" label="Phone"></v-checkbox>
+                  <v-checkbox v-model="address" label="Address"></v-checkbox>
+                  <v-checkbox v-model="age" label="Age"></v-checkbox>
+                </v-flex>
+                <v-flex d-flex md3>
+                  <v-select offset-y v-model="gender" :items="genderOptions" box label="Gender"></v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+          <v-layout>
+            <v-flex d-flex>
+              <p class="text-lg-center">This search box will serach on selected column(s) above. If none of them are selected, it will search on all columns.</p>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex  xs12 md7>
+          <v-layout row wrap>
+            <v-flex d-flex md12>
+              <v-layout>
+                <v-flex d-flex md2>
+                  <div>
+                    <v-select
+                      md1
+                      v-model="perpage"
+                      :items="perpageOptions"
+                      box
+                      label="Per page"
+                    ></v-select>
+                  </div>
+                </v-flex>
+                <v-flex md8>
+                  <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages" total-visible="7" circle></v-pagination>
+                  </div>
+                </v-flex>
+                <v-flex md2>
+                  <div class="text-xs-center pt-3">
+                    <v-chip x-large>Total: {{filteredHosts.length}}</v-chip>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex d-flex md12>
+              <v-layout>
+                <v-flex d-flex>
+                  <v-data-table
+                    :headers="headers"
+                    :items="fields"
+                    :search="search"
+                    hide-actions
+                    :pagination.sync="pagination"
+                    class="elevation-1"
+                  >
+                    <template v-slot:items="props">
+                      <td >{{ props.item.name }}</td>
+                      <td class="text-xs-center">{{ props.item.calories }}</td>
+                      <td class="text-xs-center">{{ props.item.fat }}</td>
+                      <td class="text-xs-center">{{ props.item.carbs }}</td>
+                      <td class="text-xs-center">{{ props.item.protein }}</td>
+                      <td class="text-xs-center">{{ props.item.iron }}</td>
+                    </template>
+                  </v-data-table>
+
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+      <v-layout>
+        
+
+      </v-layout>
+    </v-container>
+      
     </div>
   
 </template>
@@ -57,6 +98,8 @@
 export default {
   data () {
     return {
+      pagination: {},
+      lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
       search:'',
       fields: [ 'email','first_name', 'last_name', 'gender', 'phone','age',"address","referResouce" ],
       hosts: [],
@@ -67,7 +110,7 @@ export default {
       address:false,
       gender:null,
       genderOptions: [
-        { value: null, text: 'Gender' },
+        { value: null, text: 'Not Selected' },
         { value: 0, text: 'Male' },
         { value: 1, text: 'Female' }
       ],
@@ -80,6 +123,101 @@ export default {
         { value: 20, text: '20' },
         { value: 30, text: '30' },
         { value: 50, text: '50' }
+      ],
+      headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' }
+        ],
+      desserts: [
+        {
+          name: 'Frozen Yogurt',
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: '1%'
+        },
+        {
+          name: 'Ice cream sandwich',
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: '1%'
+        },
+        {
+          name: 'Eclair',
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: '7%'
+        },
+        {
+          name: 'Cupcake',
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: '8%'
+        },
+        {
+          name: 'Gingerbread',
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: '16%'
+        },
+        {
+          name: 'Jelly bean',
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: '0%'
+        },
+        {
+          name: 'Lollipop',
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: '2%'
+        },
+        {
+          name: 'Honeycomb',
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: '45%'
+        },
+        {
+          name: 'Donut',
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: '22%'
+        },
+        {
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: '6%'
+        }
       ]
     }
   },
@@ -111,6 +249,15 @@ export default {
   },
 
   computed:{
+
+    pages () {
+      if (this.pagination.rowsPerPage == null ||
+        this.pagination.totalItems == null
+      ) return 0
+
+      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+    },
+
     totalPages: function(){
       return Math.ceil(this.filteredHosts.length/this.perpage);
     },
@@ -171,11 +318,7 @@ export default {
 
 <style scoped>
 
-#host-page-container{
-  margin-top: 0.5in;
-  padding-left: 5%;
-  padding-right: 5%
-}
+
 
 #search{
   width: 80%;
