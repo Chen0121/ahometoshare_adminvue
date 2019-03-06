@@ -22,11 +22,11 @@
               <span>Welcome to AHomeToShare Admin Console. Please be VERY careful with password.</span>
             </v-card-title>
             <v-card-text>
-              <v-form px-3>
+              <v-form px-3 ref="loginForm">
                 <v-layout row wrap>
                   <v-flex md1 pt-3><v-icon>person</v-icon></v-flex>
                   <v-flex md10>
-                    <v-text-field label="Username"  clearable></v-text-field>
+                    <v-text-field label="Username" v-model="username" :rules="inputRules" clearable></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row wrap>
@@ -34,7 +34,7 @@
                     <v-icon>lock</v-icon>
                   </v-flex>
                   <v-flex md10>
-                    <v-text-field label="Password" clearable></v-text-field>
+                    <v-text-field label="Password" v-model="password" :rules="inputRules" clearable></v-text-field>
                   </v-flex>
                 </v-layout>
                 
@@ -42,7 +42,7 @@
                 
                 <v-layout row wrap>
                   <v-flex d-flex md4>
-                    <v-btn color="success" @click="submit">Login<v-icon right>send</v-icon></v-btn>
+                    <v-btn color="success" @click="login">Login<v-icon right>send</v-icon></v-btn>
                   </v-flex>
                   <v-spacer></v-spacer>
                   <v-flex d-flex md4>
@@ -61,6 +61,29 @@
 
 <script>
 export default {
+
+  data(){
+    return{
+      username:'',
+      password:'',
+      inputRules:[
+        v => v.length >= 6 || 'Minimum length is 6 characters'
+      ]
+    }
+  },
+
+  methods: {
+    login(){
+      if(this.$refs.loginForm.validate()){
+        console.log(this.username + ' ' + this.password );
+      }
+    },
+
+    reset(){
+      this.username='',
+      this.password=''
+    }
+  }
     
 };
 </script>

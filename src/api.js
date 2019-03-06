@@ -39,7 +39,7 @@ axios.interceptors.response.use(
           // redirect to login if current path isn't login
           router.currentRoute.path !== "login" &&
             router.replace({
-              path: "login",
+              path: "/login",
               query: { redirect: router.currentRoute.path }
             });
       }

@@ -49,7 +49,7 @@
         return{
             
             items: [
-                { title: 'DASHBOARD', icon: 'dashboard', route:'/' },
+                { title: 'DASHBOARD', icon: 'dashboard', route:'/dashboard' },
                 { title: 'HOST MANAGEMENT', icon: 'accessibility_new', route:'/hostManagement' },
                 { title: 'RENTER MANAGEMENT', icon: 'face', route:'/renterManagement' },
                 { title: 'ABOUT', icon: 'question_answer', route:'/about' }

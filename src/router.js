@@ -3,7 +3,9 @@ import Router from "vue-router";
 import Dashboard from "./views/Dashboard";
 import HostManagement from "./views/HostManagement";
 import RenterManagement from "./views/RenterManagement";
+import About from "./views/About";
 import Login from "./views/Login";
+import Layout from "./views/Layout";
 import store from "./store/store";
 
 Vue.use(Router);
@@ -14,27 +16,30 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      name: "dashboard",
-      component: Dashboard,
-      meta: {
-        requireAuth: true
-      }
-    },
-    {
-      path: "/hostManagement",
-      name: "hostManagement",
-      component: HostManagement,
-      meta: {
-        requireAuth: true
-      }
-    },
-    {
-      path: "/renterManagement",
-      name: "renterManagement",
-      component: RenterManagement,
-      meta: {
-        requireAuth: true
-      }
+      name: "layout",
+      component: Layout,
+      children:[
+        {
+          path: "/dashboard",
+          name: "dashboard",
+          component: Dashboard
+        },
+        {
+          path: "/hostManagement",
+          name: "hostManagement",
+          component: HostManagement
+        },
+        {
+          path: "/renterManagement",
+          name: "renterManagement",
+          component: RenterManagement
+        },
+        {
+          path: "/about",
+          name: "about",
+          component: About
+        }
+      ]
     },
     {
       path: "/login",
@@ -49,9 +54,9 @@ router.beforeEach((to, from, next) => {
     if (store.state.token) {
       next();
     } else {
+      console.log("Login required");
       next({
-        path: "/login",
-        query: { redirect: to.fullPath }
+        path: "/login"
       });
     }
   } else {
