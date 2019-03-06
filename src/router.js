@@ -18,7 +18,7 @@ const router = new Router({
       path: "/",
       name: "layout",
       component: Layout,
-      children:[
+      children: [
         {
           path: "/dashboard",
           name: "dashboard",
