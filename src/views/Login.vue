@@ -60,6 +60,9 @@
 </template>
 
 <script>
+import * as types from "../store/types";
+
+
 export default {
 
   data(){
@@ -74,8 +77,14 @@ export default {
 
   methods: {
     login(){
+      console.log(types.BASE_DOMAIN)
       if(this.$refs.loginForm.validate()){
         console.log(this.username + ' ' + this.password );
+        let params ={
+          username: this.username,
+          password: this.password
+        }
+        this.api.get(types.BASE_DOMAIN,params);
       }
     },
 

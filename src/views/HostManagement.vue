@@ -19,7 +19,7 @@
                   <v-checkbox v-model="age" label="Age"></v-checkbox>
                 </v-flex>
                 <v-flex d-flex md3>
-                  <v-select offset-y v-model="gender" :items="genderOptions" box label="Gender"></v-select>
+                  <v-select v-model="gender" :items="genderOptions" box label="Gender" menu-props="offsetY"></v-select>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -110,7 +110,7 @@ export default {
       address:false,
       gender:null,
       genderOptions: [
-        { value: null, text: 'Not Selected' },
+        { value: null, text: 'Unselected' },
         { value: 0, text: 'Male' },
         { value: 1, text: 'Female' }
       ],
