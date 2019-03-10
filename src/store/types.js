@@ -4,4 +4,4 @@ export const LOGOUT = "logout";
 
 export const TITLE = "title";
 
-export const BASE_DOMAIN = "localhost:8088";
+export const BASE_DOMAIN = "http://localhost:8088";

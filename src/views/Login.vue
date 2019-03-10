@@ -53,6 +53,7 @@
               </v-form>
             </v-card-text>
           </v-card>
+          <v-btn @click="test">test</v-btn>
       </v-flex>
     </v-layout>
 
@@ -61,16 +62,17 @@
 
 <script>
 import * as types from "../store/types";
-
+import store from "../store/store";
+import router from "../router";
 
 export default {
 
   data(){
     return{
-      username:'',
-      password:'',
+      username:'super',
+      password:'ahometoshare',
       inputRules:[
-        v => v.length >= 6 || 'Minimum length is 6 characters'
+        v => v.length >= 5 || 'Minimum length is 6 characters'
       ]
     }
   },
@@ -78,14 +80,43 @@ export default {
   methods: {
     login(){
       console.log(types.BASE_DOMAIN)
-      if(this.$refs.loginForm.validate()){
-        console.log(this.username + ' ' + this.password );
-        let params ={
-          username: this.username,
-          password: this.password
-        }
-        this.api.get(types.BASE_DOMAIN,params);
+      let params ={
+        username: this.username,
+        password: this.password        
       }
+      if(this.$refs.loginForm.validate()){
+        let url = types.BASE_DOMAIN+"/adminLogin";
+        this.api.post(url,params).then(data =>{
+          let dat = {
+            token: data.data.token,
+            user:{
+              username: data.data.username,
+              userType: data.data.userType
+            }
+          }
+          store.dispatch("login",dat);
+          if(data.status===1){
+            router.push({
+              path:"dashboard",
+            });
+          }
+          
+        }).catch(e => {
+            console.log(e);
+        });
+      }
+    },
+    test(){
+      let params ={
+        username: this.username,
+        password: this.password        
+      }
+      let getinfourl = types.BASE_DOMAIN+"/admin/getAdminInfo";
+          this.api.post(getinfourl,params).then(data => {
+            console.log("userinfo: "+data)
+          }).catch(e =>{
+            console.log(e);
+          });
     },
 
     reset(){

@@ -12,7 +12,8 @@ export default new Vuex.Store({
   mutations: {
     [types.LOGIN]: (state, data) => {
       localStorage.token = data;
-      state.token = data;
+      state.token = data.token;
+      state.user = data.user;
     },
     [types.LOGOUT]: state => {
       localStorage.removeItem("token");
@@ -20,6 +21,11 @@ export default new Vuex.Store({
     },
     [types.TITLE]: (state, data) => {
       state.title = data;
+    }
+  },
+  actions: {
+    [types.LOGIN]: ({ commit }, data) => {
+      commit(types.LOGIN, data);
     }
   }
 });

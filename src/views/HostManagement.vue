@@ -5,7 +5,7 @@
         <v-flex  xs12 md5>
           <v-layout row>
             <v-flex mx-3 d-flex>
-              <v-text-field label="SEARCH" append-icon="search"></v-text-field>      
+              <v-text-field label="SEARCH" append-icon="search" v-model="search"></v-text-field>      
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -16,7 +16,7 @@
                   <v-checkbox v-model="name" label="Name"></v-checkbox>
                   <v-checkbox v-model="phone" label="Phone"></v-checkbox>
                   <v-checkbox v-model="address" label="Address"></v-checkbox>
-                  <v-checkbox v-model="age" label="Age"></v-checkbox>
+                  <v-checkbox v-model="year_of_birth" label="Birth Year"></v-checkbox>
                 </v-flex>
                 <v-flex d-flex md3>
                   <v-select v-model="gender" :items="genderOptions" box label="Gender" menu-props="offsetY"></v-select>
@@ -27,6 +27,7 @@
           <v-layout>
             <v-flex d-flex>
               <p class="text-lg-center">This search box will serach on selected column(s) above. If none of them are selected, it will search on all columns.</p>
+              <HostDetailPopup/>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -38,20 +39,20 @@
                   <div>
                     <v-select
                       md1
-                      v-model="perpage"
-                      :items="perpageOptions"
+                      v-model="pagination.rowsPerPage"
+                      :items="rowsPerPageItems"
                       box
                       label="Per page"
                     ></v-select>
                   </div>
                 </v-flex>
-                <v-flex md8>
+                <v-flex d-flex md8>
                   <div class="text-xs-center pt-2">
-                    <v-pagination v-model="pagination.page" :length="pages" total-visible="7" circle></v-pagination>
+                    <v-pagination v-model="pagination.page" :length="pages" :total-visible="7" circle></v-pagination>
                   </div>
                 </v-flex>
-                <v-flex md2>
-                  <div class="text-xs-center pt-3">
+                <v-flex d-flex md2>
+                  <div class="text-xs-right pt-3">
                     <v-chip x-large>Total: {{filteredHosts.length}}</v-chip>
                   </div>
                 </v-flex>
@@ -62,19 +63,22 @@
                 <v-flex d-flex>
                   <v-data-table
                     :headers="headers"
-                    :items="fields"
-                    :search="search"
-                    hide-actions
+                    :items="filteredHosts"
                     :pagination.sync="pagination"
+                    :rows-per-page-items ="rowsPerPageItems"
                     class="elevation-1"
                   >
                     <template v-slot:items="props">
-                      <td >{{ props.item.name }}</td>
-                      <td class="text-xs-center">{{ props.item.calories }}</td>
-                      <td class="text-xs-center">{{ props.item.fat }}</td>
-                      <td class="text-xs-center">{{ props.item.carbs }}</td>
-                      <td class="text-xs-center">{{ props.item.protein }}</td>
-                      <td class="text-xs-center">{{ props.item.iron }}</td>
+                      <tr @click="showHostDetail(props.item)">
+                        <td >{{ props.item.email }}</td>
+                        <td class="text-xs-center">{{ props.item.first_name }}</td>
+                        <td class="text-xs-center">{{ props.item.last_name }}</td>
+                        <td class="text-xs-center">{{ props.item.gender }}</td>
+                        <td class="text-xs-center">{{ props.item.phone }}</td>
+                        <td class="text-xs-center">{{ props.item.year_of_birth }}</td>
+                        <td class="text-xs-center">{{ props.item.address }}</td>
+                        <td class="text-xs-center">{{ props.item.referResouce }}</td>
+                      </tr>
                     </template>
                   </v-data-table>
 
@@ -95,18 +99,22 @@
 </template>
 
 <script>
+import HostDetailPopup from '../components/HostDetailPopup'
+import {userDetailBus} from '../main'
+
 export default {
+  components: {
+    HostDetailPopup
+  },
   data () {
     return {
       pagination: {},
-      lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
       search:'',
-      fields: [ 'email','first_name', 'last_name', 'gender', 'phone','age',"address","referResouce" ],
       hosts: [],
       name:false,
       email:false,
       phone:false,
-      age:false,
+      year_of_birth:false,
       address:false,
       gender:null,
       genderOptions: [
@@ -115,7 +123,7 @@ export default {
         { value: 1, text: 'Female' }
       ],
       currentPage:1,
-      perpage:1,
+      rowsPerPageItems: [1, 10, 20, 30, 40],
       perpageOptions: [
         { value: null, text: 'Items per page', disabled: true },
         { value: 1, text: '1' },
@@ -126,111 +134,32 @@ export default {
       ],
       headers: [
           {
-            text: 'Dessert (100g serving)',
+            text: 'email',
             align: 'left',
             sortable: false,
             value: 'name'
           },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
-        },
-        {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
-        },
-        {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
-        },
-        {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
-        },
-        {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
-        }
-      ]
+          { text: 'First Name', value: 'first_name' },
+          { text: 'Last Name', value: 'last_name' },
+          { text: 'Gender', value: 'gender' },
+          { text: 'Phone', value: 'phone' },
+          { text: 'Year Of Birth', value: 'year_of_birth' },
+          { text: 'Address', value: 'address' },
+          { text: 'ReferResouce', value: 'referResouce' }
+        ]
     }
   },
   methods:{
     getAllHosts(){
-      let url = "http://localhost:8088/admin/getAllHosts";
-      this.$http.get(url).then(data =>{
-        let orignalHostsArray = data.body.data
+      let url = "admin/getAllHosts";
+      this.api.get(url).then(data =>{
+        console.log(data);
+        let orignalHostsArray = data.data;
         let hostsArray = [];
         for(let key in orignalHostsArray){
-          let temp = {email:'', age:'', first_name: '', last_name: '', gender: '', phone:'', address:'', referResouce:''};
+          let temp = {email:'', year_of_birth:'', first_name: '', last_name: '', gender: '', phone:'', address:'', referResouce:''};
           temp.email = String(orignalHostsArray[key].email);
-          temp.age = String(orignalHostsArray[key].dateOfBirth);
+          temp.year_of_birth = String(orignalHostsArray[key].dateOfBirth);
           temp.first_name = String(orignalHostsArray[key].firstName);
           temp.last_name = String(orignalHostsArray[key].lastName);
           temp.gender = orignalHostsArray[key].gender==0?"Male":"Female";
@@ -241,6 +170,9 @@ export default {
         }
         this.hosts = hostsArray;
       });
+    },
+    showHostDetail(host){
+      userDetailBus.$emit('showhostDetail',host);
     }
   },
 
@@ -251,27 +183,20 @@ export default {
   computed:{
 
     pages () {
-      if (this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      ) return 0
-
-      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-    },
-
-    totalPages: function(){
-      return Math.ceil(this.filteredHosts.length/this.perpage);
+      if (this.pagination.rowsPerPage == null) return 0
+      return Math.ceil(this.filteredHosts.length / this.pagination.rowsPerPage)
     },
 
     filteredHosts:function(){
       return this.hosts.filter(host =>{
-        if(!(this.name||this.email||this.phone||this.gender||this.age||this.address)){
+        if(!(this.name||this.email||this.phone||this.gender||this.year_of_birth||this.address)){
           if(host.first_name.match(this.search)||host.last_name.match(this.search)){
             return true;
           }else if(host.email.match(this.search)){
             return true;
           }else if(String(host.phone).match(this.search)){
             return true;
-          }else if(String(host.age).match(this.search)){
+          }else if(String(host.year_of_birth).match(this.search)){
             return true;
           }else if(host.address.match(this.search)){
             return true;
@@ -292,8 +217,8 @@ export default {
             return true;
           }
         }
-        if(this.age){
-          if(String(host.age).match(this.search)){
+        if(this.year_of_birth){
+          if(String(host.year_of_birth).match(this.search)){
             return true;
           }
         }

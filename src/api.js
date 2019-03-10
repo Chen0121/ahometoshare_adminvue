@@ -4,12 +4,13 @@ import * as types from "./store/types";
 import router from "./router";
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = "";
+axios.defaults.baseURL = "http://localhost:8088";
+//axios.defaults.headers.common["token"] = store.state.token;
 
 axios.interceptors.request.use(
   config => {
     if (store.state.token) {
-      config.headers.Authorization = `token ${store.state.token}`;
+      config.headers.common["token"] = store.state.token;
     }
     return config;
   },
@@ -21,13 +22,13 @@ axios.interceptors.request.use(
 // http response intercepter
 axios.interceptors.response.use(
   response => {
-    const resbody = response.data.body;
+    const resbody = response.data;
+    console.log(resbody);
     if (resbody.status == 1) {
       //valid result, login successfully
-      return resbody.data;
-    } else if (resbody.code == "20011") {
-      resbody.data = "";
-      return Promise.reject(resbody.data);
+      return resbody;
+    } else if (resbody.status == 2) {
+      return Promise.reject(resbody);
     }
   },
   error => {
