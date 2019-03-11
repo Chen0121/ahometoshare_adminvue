@@ -148,9 +148,6 @@ export default {
     userDetailBus.$on('showhostDetail',host =>{
       this.dialog = true;
       let url="admin/getHostDetailByEmail";
-      let params ={
-        email:host.email
-      };
       this.api.get(url,{
         params:{
           email:host.email

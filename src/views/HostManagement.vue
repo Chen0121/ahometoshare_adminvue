@@ -11,7 +11,7 @@
           <v-layout row>
             <v-flex d-flex class="px-3">
               <v-layout>
-                <v-flex d-flex md12>
+                <v-flex d-flex md9>
                   <v-checkbox v-model="email" label="Email"></v-checkbox>
                   <v-checkbox v-model="name" label="Name"></v-checkbox>
                   <v-checkbox v-model="phone" label="Phone"></v-checkbox>
@@ -19,7 +19,7 @@
                   <v-checkbox v-model="year_of_birth" label="Birth Year"></v-checkbox>
                 </v-flex>
                 <v-flex d-flex md3>
-                  <v-select v-model="gender" :items="genderOptions" box label="Gender" menu-props="offsetY"></v-select>
+                  <v-select v-model="gender" :items="genderOptions" box label="Gender" menu-props="offsetY" clearable></v-select>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -118,26 +118,16 @@ export default {
       address:false,
       gender:null,
       genderOptions: [
-        { value: null, text: 'Unselected' },
-        { value: 0, text: 'Male' },
-        { value: 1, text: 'Female' }
+        { value: 'Male', text: 'Male' },
+        { value: 'Female', text: 'Female' }
       ],
       currentPage:1,
       rowsPerPageItems: [1, 10, 20, 30, 40],
-      perpageOptions: [
-        { value: null, text: 'Items per page', disabled: true },
-        { value: 1, text: '1' },
-        { value: 10, text: '10' },
-        { value: 20, text: '20' },
-        { value: 30, text: '30' },
-        { value: 50, text: '50' }
-      ],
       headers: [
           {
-            text: 'email',
+            text: 'Email',
             align: 'left',
-            sortable: false,
-            value: 'name'
+            value: 'email'
           },
           { text: 'First Name', value: 'first_name' },
           { text: 'Last Name', value: 'last_name' },
@@ -192,7 +182,7 @@ export default {
 
     filteredHosts:function(){
       return this.hosts.filter(host =>{
-        if(!(this.name||this.email||this.phone||this.gender||this.year_of_birth||this.address)){
+        if(!(this.name||this.email||this.phone||this.year_of_birth||this.address||this.gender)){
           if(host.first_name.match(this.search)||host.last_name.match(this.search)){
             return true;
           }else if(host.email.match(this.search)){
@@ -230,7 +220,7 @@ export default {
             return true;
           }
         }
-        if(this.gender){
+        if(this.gender!=null){
           if(this.gender==host.gender){
             return true;
           }

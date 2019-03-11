@@ -34,7 +34,10 @@
                     <v-icon>lock</v-icon>
                   </v-flex>
                   <v-flex md10>
-                    <v-text-field label="Password" v-model="password" :rules="inputRules" clearable></v-text-field>
+                    <v-text-field 
+                    :append-icon="showPwd ? 'visibility' : 'visibility_off'"
+                    @click:append="showPwd = !showPwd"
+                    label="Password" v-model="password" :rules="inputRules" :type="showPwd ? 'text' : 'password'" clearable ></v-text-field>
                   </v-flex>
                 </v-layout>
                 
@@ -53,7 +56,6 @@
               </v-form>
             </v-card-text>
           </v-card>
-          <v-btn @click="test">test</v-btn>
       </v-flex>
     </v-layout>
 
@@ -69,6 +71,7 @@ export default {
 
   data(){
     return{
+      showPwd:false,
       username:'super',
       password:'ahometoshare',
       inputRules:[
@@ -106,19 +109,6 @@ export default {
         });
       }
     },
-    test(){
-      let params ={
-        username: this.username,
-        password: this.password        
-      }
-      let getinfourl = types.BASE_DOMAIN+"/admin/getAdminInfo";
-          this.api.post(getinfourl,params).then(data => {
-            console.log("userinfo: "+data)
-          }).catch(e =>{
-            console.log(e);
-          });
-    },
-
     reset(){
       this.username='',
       this.password=''
