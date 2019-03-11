@@ -2,7 +2,7 @@
     <div id="host-page-container">
     <v-container grid-list-md>
       <v-layout row wrap>
-        <v-flex  xs12 md5>
+        <v-flex  sm12 md5>
           <v-layout row>
             <v-flex mx-3 d-flex>
               <v-text-field label="SEARCH" append-icon="search" v-model="search"></v-text-field>      
@@ -11,7 +11,7 @@
           <v-layout row>
             <v-flex d-flex class="px-3">
               <v-layout>
-                <v-flex d-flex md9>
+                <v-flex d-flex md12>
                   <v-checkbox v-model="email" label="Email"></v-checkbox>
                   <v-checkbox v-model="name" label="Name"></v-checkbox>
                   <v-checkbox v-model="phone" label="Phone"></v-checkbox>
@@ -31,7 +31,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex  xs12 md7>
+        <v-flex  sm12 md7>
           <v-layout row wrap>
             <v-flex d-flex md12>
               <v-layout>
@@ -178,6 +178,9 @@ export default {
 
   created(){
     this.getAllHosts();
+    userDetailBus.$on("hostUpdated",()=>{
+      this.getAllHosts();
+    });
   },
 
   computed:{
