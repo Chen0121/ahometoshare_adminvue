@@ -149,7 +149,7 @@ export default {
         let orignalRentersArray = data.data;
         let rentersArray = [];
         for(let key in orignalRentersArray){
-          let temp = {id:null,email:'', yearOfBirth:'', firstName: '', lastName: '', gender: '', phone:'', criminalityCheck:'', referResouce:''};
+          let temp = {id:null, email:'', yearOfBirth:'', firstName: '', lastName: '', gender: '', phone:'', criminalityCheck:'', referResouce:''};
           temp.id = orignalRentersArray[key].id;
           temp.email = String(orignalRentersArray[key].email);
           temp.yearOfBirth = String(orignalRentersArray[key].dateOfBirth);
@@ -157,7 +157,7 @@ export default {
           temp.lastName = String(orignalRentersArray[key].lastName);
           temp.gender = orignalRentersArray[key].gender==0?"Male":"Female";
           temp.phone = String(orignalRentersArray[key].phone);
-          temp.criminalityCheck = orignalRentersArray[key].criminalityCheck==undefined?null:orignalRentersArray[key].criminalityCheck?Yes:No;
+          temp.criminalityCheck = orignalRentersArray[key].criminalityCheck==undefined?null:orignalRentersArray[key].criminalityCheck?'Yes':'No';
           temp.referResouce = String(orignalRentersArray[key].referralSource);
           rentersArray.push(temp);
         }

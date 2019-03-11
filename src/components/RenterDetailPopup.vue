@@ -45,7 +45,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click="saveRenter">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -97,6 +97,16 @@
                 smoker:null,
                 referralSource:null
             }
+        }
+    },
+    methods:{
+        saveRenter(){
+            let url = "admin/updateRenter";
+            this.api.post(url,this.renter).then(data =>{
+                console.log(data);
+                userDetailBus.$emit("renterUpdated");
+                this.dialog = false;
+            });
         }
     },
     created(){

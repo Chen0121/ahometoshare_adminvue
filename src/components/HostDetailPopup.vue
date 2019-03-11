@@ -133,7 +133,7 @@ export default {
   },
   methods:{
     saveHost(){
-      let url = "admin/saveHostDetail";
+      let url = "admin/updateHostDetail";
       this.api.post(url,{
         host:this.host,
         propertyList:null
@@ -147,10 +147,10 @@ export default {
   created(){
     userDetailBus.$on('showhostDetail',host =>{
       this.dialog = true;
-      let url="admin/getHostDetailByEmail";
+      let url="admin/getHostDetailById";
       this.api.get(url,{
         params:{
-          email:host.email
+          hostId:host.hostId
         }
         }).then(data =>{
         console.log(data);

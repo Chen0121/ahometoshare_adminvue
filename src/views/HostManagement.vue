@@ -147,7 +147,8 @@ export default {
         let orignalHostsArray = data.data;
         let hostsArray = [];
         for(let key in orignalHostsArray){
-          let temp = {email:'', year_of_birth:'', first_name: '', last_name: '', gender: '', phone:'', address:'', referResouce:''};
+          let temp = {hostId: null, email:'', year_of_birth:'', first_name: '', last_name: '', gender: '', phone:'', address:'', referResouce:''};
+          temp.hostId = orignalHostsArray[key].hostId;
           temp.email = String(orignalHostsArray[key].email);
           temp.year_of_birth = String(orignalHostsArray[key].dateOfBirth);
           temp.first_name = String(orignalHostsArray[key].firstName);
