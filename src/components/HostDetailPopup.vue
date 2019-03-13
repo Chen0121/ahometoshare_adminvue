@@ -17,7 +17,7 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                     <v-flex xs12 sm6 md4>
-                        <v-text-field label="Email*" v-model="host.email" required clearable></v-text-field>
+                        <v-text-field label="Email*" v-model="host.email" required clearable readonly></v-text-field>
                     </v-flex>
                     <v-flex xs12 sm6 md4>
                         <v-text-field label="First name*" v-model="host.firstName" required clearable></v-text-field>

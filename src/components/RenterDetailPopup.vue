@@ -9,7 +9,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="renter.email" label="Email*" required clearable></v-text-field>
+                <v-text-field v-model="renter.email" label="Email*" required readonly></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="renter.firstName" label="First Name*" required clearable></v-text-field>
