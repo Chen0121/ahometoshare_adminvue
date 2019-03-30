@@ -15,7 +15,6 @@
                   <v-checkbox v-model="email" label="Email"></v-checkbox>
                   <v-checkbox v-model="name" label="Name"></v-checkbox>
                   <v-checkbox v-model="phone" label="Phone"></v-checkbox>
-                  <v-checkbox v-model="address" label="Address"></v-checkbox>
                   <v-checkbox v-model="year_of_birth" label="Birth Year"></v-checkbox>
                 </v-flex>
                 <v-flex d-flex md3>
@@ -76,7 +75,6 @@
                         <td class="text-xs-center">{{ props.item.gender }}</td>
                         <td class="text-xs-center">{{ props.item.phone }}</td>
                         <td class="text-xs-center">{{ props.item.year_of_birth }}</td>
-                        <td class="text-xs-center">{{ props.item.address }}</td>
                         <td class="text-xs-center">{{ props.item.referResouce }}</td>
                       </tr>
                     </template>
@@ -115,7 +113,6 @@ export default {
       email:false,
       phone:false,
       year_of_birth:false,
-      address:false,
       gender:null,
       genderOptions: [
         { value: 'Male', text: 'Male' },
@@ -134,7 +131,6 @@ export default {
           { text: 'Gender', value: 'gender' },
           { text: 'Phone', value: 'phone' },
           { text: 'Year Of Birth', value: 'year_of_birth' },
-          { text: 'Address', value: 'address' },
           { text: 'ReferResouce', value: 'referResouce' }
         ]
     }
@@ -147,7 +143,7 @@ export default {
         let orignalHostsArray = data.data;
         let hostsArray = [];
         for(let key in orignalHostsArray){
-          let temp = {hostId: null, email:'', year_of_birth:'', first_name: '', last_name: '', gender: '', phone:'', address:'', referResouce:''};
+          let temp = {hostId: null, email:'', year_of_birth:'', first_name: '', last_name: '', gender: '', phone:'', referResouce:''};
           temp.hostId = orignalHostsArray[key].hostId;
           temp.email = String(orignalHostsArray[key].email);
           temp.year_of_birth = String(orignalHostsArray[key].dateOfBirth);
@@ -155,7 +151,6 @@ export default {
           temp.last_name = String(orignalHostsArray[key].lastName);
           temp.gender = orignalHostsArray[key].gender==0?"Male":"Female";
           temp.phone = String(orignalHostsArray[key].phone);
-          temp.address = "";
           temp.referResouce = String(orignalHostsArray[key].referralSource);
           hostsArray.push(temp);
         }
@@ -183,7 +178,7 @@ export default {
 
     filteredHosts:function(){
       return this.hosts.filter(host =>{
-        if(!(this.name||this.email||this.phone||this.year_of_birth||this.address||this.gender)){
+        if(!(this.name||this.email||this.phone||this.year_of_birth||this.gender)){
           if(host.first_name.match(this.search)||host.last_name.match(this.search)){
             return true;
           }else if(host.email.match(this.search)){
@@ -191,8 +186,6 @@ export default {
           }else if(String(host.phone).match(this.search)){
             return true;
           }else if(String(host.year_of_birth).match(this.search)){
-            return true;
-          }else if(host.address.match(this.search)){
             return true;
           }
         }
@@ -213,11 +206,6 @@ export default {
         }
         if(this.year_of_birth){
           if(String(host.year_of_birth).match(this.search)){
-            return true;
-          }
-        }
-        if(this.address){
-          if(host.address.match(this.search)){
             return true;
           }
         }

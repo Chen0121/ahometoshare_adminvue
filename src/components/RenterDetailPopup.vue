@@ -43,7 +43,7 @@
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <ConfirmDeleteRenterPopup/>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
           <v-btn color="blue darken-1" flat @click="saveRenter">Save</v-btn>
         </v-card-actions>
@@ -54,8 +54,12 @@
 
 <script>
   import {userDetailBus} from '../main'
+  import ConfirmDeleteRenterPopup from '../components/ConfirmDeleteRenterPopup'
 
   export default {
+    components: {
+      ConfirmDeleteRenterPopup
+    },
     data () {
         return {
             dialog: false,
@@ -100,29 +104,47 @@
         }
     },
     methods:{
-        saveRenter(){
-            let url = "admin/updateRenter";
-            this.api.post(url,this.renter).then(data =>{
-                console.log(data);
-                userDetailBus.$emit("renterUpdated");
-                this.dialog = false;
-            });
+      saveRenter(){
+        let url = "admin/updateRenter";
+        this.api.post(url,this.renter).then(data =>{
+            console.log(data);
+            userDetailBus.$emit("renterUpdated");
+            this.dialog = false;
+        });
+      },
+      deleteRenter(){
+        let url ="admin/deleteRenter";
+        this.api.post(url,{
+          renterId: this.renter.id
+        }).then(data => {
+          userDetailBus.$emit('hostUpdated',data);
+          this.clearRenter();
+        })
+      },
+      clearRenter(){
+      for (var key in this.renter ) {
+          this.renter[key] = null;
         }
+        this.dialog = false;
+      }
     },
     created(){
-        userDetailBus.$on('showRenterDetail',renter =>{
-        this.dialog = true;
-        let url="admin/getRenterDetailById";
-        this.api.get(url,{
-            params:{
-                id:renter.id
-            }
-            }).then(data =>{
-            console.log(data);
-            for(let key in this.renter){
-                this.renter[key] = data.data[key];
-            }
-        });
+      userDetailBus.$on('showRenterDetail',renter =>{
+      this.dialog = true;
+      let url="admin/getRenterDetailById";
+      this.api.get(url,{
+          params:{
+              id:renter.id
+          }
+          }).then(data =>{
+          console.log(data);
+          for(let key in this.renter){
+              this.renter[key] = data.data[key];
+          }
+      });
+      userDetailBus.$on('deleteRenter', ()=>{
+        this.deleteRenter();
+      });
     });
   }
   }
