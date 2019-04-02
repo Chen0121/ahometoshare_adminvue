@@ -5,6 +5,9 @@
 npm install
 ```
 
+### install echart
+npm install --save echarts-gl
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
