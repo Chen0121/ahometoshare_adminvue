@@ -25,6 +25,7 @@ Vue.config.productionTip = false;
 Vue.prototype.api = api;
 
 export const userDetailBus = new Vue();
+export const articleDetailBus = new Vue();
 
 new Vue({
   api,

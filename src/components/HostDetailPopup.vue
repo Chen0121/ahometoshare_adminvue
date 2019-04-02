@@ -335,8 +335,6 @@ export default {
               tempPropertyPictureMap[propertyId].push(data.data[key].pictureBase64);
             }
             this.propertyPictureMap = tempPropertyPictureMap;
-            for(let key in tempPropertyPictureMap){
-            }
           })
         }
       });
