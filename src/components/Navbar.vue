@@ -6,12 +6,7 @@
             <v-toolbar-title class="font-weight-light">A HOME TO SHARE</v-toolbar-title>
             <v-toolbar-title>ADMIN CONSOLE</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat>Link One</v-btn>
-            <v-btn flat>Link Two</v-btn>
-            <v-btn flat>Link Three</v-btn>
-            </v-toolbar-items>
-            <v-btn flat>
+            <v-btn flat @click="signOut">
                 <span>Sign out</span>
                 <v-icon right>exit_to_app</v-icon>
             </v-btn>
@@ -44,6 +39,8 @@
 </template>
 
 <script>
+  import store from "../store/store";
+
   export default {
     data(){
         return{
@@ -57,6 +54,11 @@
             ],
             drawer: false
 
+        }
+    },
+    methods:{
+        signOut(){
+            store.dispatch("logout");
         }
     }
   }
