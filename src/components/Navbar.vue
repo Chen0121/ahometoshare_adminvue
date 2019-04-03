@@ -40,6 +40,9 @@
 
 <script>
   import store from "../store/store";
+  import * as types from "../store/types";
+  import router from "../router";
+
 
   export default {
     data(){
@@ -50,6 +53,7 @@
                 { title: 'HOST MANAGEMENT', icon: 'accessibility_new', route:'/hostManagement' },
                 { title: 'RENTER MANAGEMENT', icon: 'face', route:'/renterManagement' },
                 { title: 'ARTICLE MANAGEMENT', icon: 'library_books', route:'/articleManagement' },
+                { title: 'EDIT ACCOUNT', icon: 'person', route:'/editAccount' },
                 { title: 'ABOUT', icon: 'question_answer', route:'/about' }
             ],
             drawer: false
@@ -58,7 +62,15 @@
     },
     methods:{
         signOut(){
-            store.dispatch("logout");
+            let url = types.BASE_DOMAIN+"/admin/logout";
+            this.api.post(url).then(() =>{
+                store.dispatch("logout");
+                router.push({
+                    path:"login"
+                });
+            }).catch(e => {
+                console.log(e);
+            });
         }
     }
   }

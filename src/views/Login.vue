@@ -26,7 +26,7 @@
                 <v-layout row wrap>
                   <v-flex md1 pt-3><v-icon>person</v-icon></v-flex>
                   <v-flex md10>
-                    <v-text-field label="Username" v-model="username" :rules="inputRules" clearable></v-text-field>
+                    <v-text-field label="Username" v-model="username" clearable></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row wrap>
@@ -75,7 +75,7 @@ export default {
       username:'super',
       password:'ahometoshare',
       inputRules:[
-        v => v.length >= 5 || 'Minimum length is 6 characters'
+        v => v.length >= 8 || 'Minimum length is 8 characters'
       ]
     }
   },

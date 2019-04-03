@@ -1,5 +1,9 @@
 <template>
   <v-layout row justify-center>
+    <v-snackbar v-model="snackbar" :timeout="4000" top :color="snackbarColor">
+      <span>{{snackbarText}}</span>
+      <v-btn flat color="white" @click="snackbar=false">close</v-btn>
+    </v-snackbar>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-card>
         <v-toolbar dark color="primary">
@@ -175,6 +179,9 @@ export default {
   },
   data () {
     return {
+      snackbar:false,
+      snackbarColor:"success",
+      snackbarText: "Operation Success",
       dialog: false,
       options: [
         {
@@ -271,6 +278,7 @@ export default {
         propertyList:this.properties
       }).then(data =>{
         userDetailBus.$emit('hostUpdated',data);
+        this.snackbar = true;
         this.clearHost();
       });
     },
@@ -288,6 +296,7 @@ export default {
         hostId: this.host.hostId
       }).then(data => {
         userDetailBus.$emit('hostUpdated',data);
+        this.snackbar = true;
         this.clearHost();
       })
     }

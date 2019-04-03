@@ -26,6 +26,9 @@ export default new Vuex.Store({
   actions: {
     [types.LOGIN]: ({ commit }, data) => {
       commit(types.LOGIN, data);
+    },
+    [types.LOGOUT]: ({ commit }) => {
+      commit(types.LOGOUT);
     }
   }
 });

@@ -4,6 +4,7 @@ import Dashboard from "./views/Dashboard";
 import HostManagement from "./views/HostManagement";
 import RenterManagement from "./views/RenterManagement";
 import ArticleManagement from "./views/ArticleManagement";
+import EditAccount from "./views/EditAccount";
 import About from "./views/About";
 import Login from "./views/Login";
 import Layout from "./views/Layout";
@@ -39,6 +40,11 @@ const router = new Router({
           path: "/articleManagement",
           name: "articleManagement",
           component: ArticleManagement
+        },
+        {
+          path: "/editAccount",
+          name: "editAccount",
+          component: EditAccount
         },
         {
           path: "/about",

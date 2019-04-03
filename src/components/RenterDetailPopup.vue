@@ -1,5 +1,9 @@
 <template>
   <v-layout row justify-center>
+    <v-snackbar v-model="snackbar" :timeout="4000" top :color="snackbarColor">
+      <span>{{snackbarText}}</span>
+      <v-btn flat color="white" @click="snackbar=false">close</v-btn>
+    </v-snackbar>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -62,6 +66,9 @@
     },
     data () {
         return {
+            snackbar:false,
+            snackbarColor:"success",
+            snackbarText: "Operation Success",
             dialog: false,
             options: [
                 {
@@ -107,7 +114,7 @@
       saveRenter(){
         let url = "admin/updateRenter";
         this.api.post(url,this.renter).then(data =>{
-            console.log(data);
+            this.snackbar = true;
             userDetailBus.$emit("renterUpdated");
             this.dialog = false;
         });
@@ -118,6 +125,7 @@
           renterId: this.renter.id
         }).then(data => {
           userDetailBus.$emit('hostUpdated',data);
+          this.snackbar = true;
           this.clearRenter();
         })
       },
@@ -137,7 +145,6 @@
               id:renter.id
           }
           }).then(data =>{
-          console.log(data);
           for(let key in this.renter){
               this.renter[key] = data.data[key];
           }
