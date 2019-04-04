@@ -49,7 +49,7 @@
                   </v-flex>
                   <v-spacer></v-spacer>
                   <v-flex d-flex md4>
-                    <v-btn color="error" @click="reset">Rest<v-icon right>replay</v-icon></v-btn>
+                    <v-btn color="error" @click="reset">Reset<v-icon right>replay</v-icon></v-btn>
                   </v-flex>
                 </v-layout>
                 

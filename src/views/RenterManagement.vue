@@ -128,7 +128,7 @@ export default {
         { value: 'Female', text: 'Female' }
       ],
       currentPage:1,
-      rowsPerPageItems: [1, 10, 20, 30, 40],
+      rowsPerPageItems: [10, 20, 30, 40],
       headers: [
           { text: 'Email', align: 'left', value: 'email'},
           { text: 'First Name', value: 'firstName' },

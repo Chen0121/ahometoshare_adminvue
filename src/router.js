@@ -5,6 +5,7 @@ import HostManagement from "./views/HostManagement";
 import RenterManagement from "./views/RenterManagement";
 import ArticleManagement from "./views/ArticleManagement";
 import EditAccount from "./views/EditAccount";
+import HomeRequestManagement from "./views/HomeRequestManagement";
 import About from "./views/About";
 import Login from "./views/Login";
 import Layout from "./views/Layout";
@@ -40,6 +41,11 @@ const router = new Router({
           path: "/articleManagement",
           name: "articleManagement",
           component: ArticleManagement
+        },
+        {
+          path: "/homeRequestManagement",
+          name: "homeRequestManagement",
+          component: HomeRequestManagement
         },
         {
           path: "/editAccount",

@@ -52,6 +52,7 @@
                 { title: 'DASHBOARD', icon: 'dashboard', route:'/dashboard' },
                 { title: 'HOST MANAGEMENT', icon: 'accessibility_new', route:'/hostManagement' },
                 { title: 'RENTER MANAGEMENT', icon: 'face', route:'/renterManagement' },
+                { title: 'HOME REQUEST MANAGEMENT', icon: 'swap_horiz', route:'/homeRequestManagement' },
                 { title: 'ARTICLE MANAGEMENT', icon: 'library_books', route:'/articleManagement' },
                 { title: 'EDIT ACCOUNT', icon: 'person', route:'/editAccount' },
                 { title: 'ABOUT', icon: 'question_answer', route:'/about' }
