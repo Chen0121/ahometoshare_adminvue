@@ -1,3 +1,12 @@
+<!--
+File: ConfirmDeleteRenterPopup.vue
+Author: Peng Li
+Clients: Michelle Bilek - A Home To Share
+Course: CST8334 - Software Development Project - 2019W
+Professor: Reg Dyer
+Project: A Home to Share
+Copyright @ 2019
+-->
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog" persistent max-width="290">

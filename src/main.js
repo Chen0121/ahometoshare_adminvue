@@ -1,3 +1,14 @@
+/*
+
+File: main.js
+Author: Peng Li
+Clients: Michelle Bilek - A Home To Share
+Course: CST8334 - Software Development Project - 2019W
+Professor: Reg Dyer
+Project: A Home to Share
+Copyright @ 2019
+
+*/
 import Vue from "vue";
 import "./plugins/vuetify";
 import App from "./App.vue";

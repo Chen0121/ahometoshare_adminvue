@@ -1,3 +1,14 @@
+/*
+
+File: api.js
+Author: Peng Li
+Clients: Michelle Bilek - A Home To Share
+Course: CST8334 - Software Development Project - 2019W
+Professor: Reg Dyer
+Project: A Home to Share
+Copyright @ 2019
+
+*/
 import axios from "axios";
 import store from "./store/store";
 import * as types from "./store/types";

@@ -1,3 +1,14 @@
+/*
+
+File: store.js
+Author: Peng Li
+Clients: Michelle Bilek - A Home To Share
+Course: CST8334 - Software Development Project - 2019W
+Professor: Reg Dyer
+Project: A Home to Share
+Copyright @ 2019
+
+*/
 import Vuex from "vuex";
 import Vue from "vue";
 import * as types from "./types";
