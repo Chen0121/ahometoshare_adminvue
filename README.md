@@ -1,32 +1,33 @@
-# ahometoshareadmin
+# A HOME TO SHARE ADMIN Installation Guildline
+This installation guildline is basd on Windows platform. Operations may vary for other platform but the basic idea should be same.
 
-## Project setup
+# Install NPM
+install NPM from https://www.npmjs.com/
+
+# Start up ahometoshare_adminvue
+Go to home directory of ahometoshare_adminvue and execute commands line by line belows
+
+# Project setup
 ```
 npm install
 ```
 
-### install echart
+# install echart
+```
 npm install --save echarts-gl
+```
 
-### Compiles and hot-reloads for development
+# Compiles and hot-reloads for development
 ```
 npm run serve
 ```
+Make sure your project is started at localhost:8080. Otherwise it will not work. You shall kill processes occupied the port to start.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# Use your started project
+go to http://localhost:8080 to verify your project is started.
+username:super
+password:ahometoshare
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
+# Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
