@@ -12,12 +12,12 @@ Go to home directory of ahometoshare_adminvue and execute commands line by line 
 npm install
 ```
 
-# install echart
+# Install echart
 ```
 npm install --save echarts-gl
 ```
 
-# Compiles and hot-reloads for development
+# Start application
 ```
 npm run serve
 ```
